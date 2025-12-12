@@ -6,7 +6,7 @@ public class PlayerLife : MonoBehaviour
 {
     [Header("플레이어 설정")]
     [SerializeField] private int maxLives = 3;
-    private int currentLives;
+    private static int currentLives;
 
     [Header("낙사 설정")]
     [SerializeField] private float fallThreshold = -10f; // 이 높이보다 떨어지면 죽습니다.
@@ -56,6 +56,7 @@ public class PlayerLife : MonoBehaviour
         if (currentLives <= 0)
         {
             Die(); // 목숨 0이면 게임 오버
+            ItemCollector.ResetCherries();
         }
         else
         {
