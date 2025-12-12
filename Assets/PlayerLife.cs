@@ -9,9 +9,11 @@ public class PlayerLife : MonoBehaviour
     private static int currentLives;
 
     [Header("낙사 설정")]
-    [SerializeField] private float fallThreshold = -10f; // 이 높이보다 떨어지면 죽습니다.
+    [SerializeField] private float fallThreshold = -10f;
 
-    // 시작 위치를 기억할 변수
+    [Header("씬 설정")]
+    [SerializeField] private string deathSceneName = "DeathScene";
+
     private Vector3 respawnPoint;
     private Rigidbody2D rb;
 
@@ -21,21 +23,17 @@ public class PlayerLife : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
         currentLives = maxLives;
 
-        // 게임 시작 시 현재 위치 저장
         respawnPoint = transform.position;
-
         UpdateLifeUI();
     }
 
-    // ★ 추가된 부분: 매 프레임마다 높이를 검사합니다.
     private void Update()
     {
-        // 플레이어의 Y 위치가 설정한 값(-10)보다 작아지면
         if (transform.position.y < fallThreshold)
         {
-            // 데미지를 입히고 부활(또는 사망) 시킵니다.
             TakeDamage();
         }
     }
@@ -55,24 +53,19 @@ public class PlayerLife : MonoBehaviour
 
         if (currentLives <= 0)
         {
-            Die(); // 목숨 0이면 게임 오버
-            ItemCollector.ResetCherries();
+            Die();
         }
         else
         {
-            Respawn(); // 목숨 남았으면 부활
+            Respawn();
         }
     }
 
     private void Respawn()
     {
-        // 1. 위치 이동
         transform.position = respawnPoint;
-
-        // 2. 떨어지던 속도 초기화 (이게 없으면 부활하자마자 다시 쑥 떨어질 수 있음)
         rb.linearVelocity = Vector2.zero;
-
-        Debug.Log("낙사 혹은 함정! 부활했습니다. 남은 목숨: " + currentLives);
+        Debug.Log("부활! 남은 목숨: " + currentLives);
     }
 
     private void UpdateLifeUI()
@@ -82,7 +75,10 @@ public class PlayerLife : MonoBehaviour
 
     private void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Debug.Log("게임 오버! 씬을 재시작합니다.");
+        ItemCollector.ResetCherries();
+
+        SceneManager.LoadScene(deathSceneName);
+
+        Debug.Log("완전히 사망! DeathScene으로 이동합니다.");
     }
 }

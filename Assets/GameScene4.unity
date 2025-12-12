@@ -1113,7 +1113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c189e63f25b39244cbcd1ab9cdea42ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSceneName: EndScene
+  targetSceneName: ClearScene
 --- !u!1001 &1189308871
 PrefabInstance:
   m_ObjectHideFlags: 0
