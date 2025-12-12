@@ -1,14 +1,12 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // 씬 이동을 위해 필수
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    // 게임 시작 버튼에 연결할 함수
     public void PlayGame()
     {
         ItemCollector.ResetCherries();
 
-        // "GameScene" 씬을 불러옵니다.
         SceneManager.LoadScene("GameScene");
     }
 
